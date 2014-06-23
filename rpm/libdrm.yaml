@@ -1,0 +1,136 @@
+#
+# WARNING: Spec file enables subpackages depending on architeture,
+#          so if you run specify it will lose the %ifarch and enable
+#          all packages.
+#
+
+Name: libdrm
+Summary: Direct Rendering Manager runtime library
+Description: |
+  %{summary}
+Version: 2.4.54
+Release: 1
+Group: System/Libraries
+License: MIT
+URL: http://dri.sourceforge.net
+Sources:
+    - "%{name}-%{version}.tar.xz"
+    - 91-drm-modeset.rules
+Patches:
+    - libdrm-make-dri-perms-okay.patch
+    - libdrm-2.4.0-no-bc.patch
+    - libdrm-2.4.25-check-programs.patch
+SetupOptions: -q -n %{name}-%{version}/upstream
+
+PkgConfigBR:
+    - pciaccess >= 0.10
+    - pthread-stubs
+    - systemd
+    - xcb
+    - libxslt
+PkgBR:
+    - docbook-style-xsl
+Requires:
+    - udev
+
+UseAsNeeded: False
+Configure: none
+
+Files:
+    - "%doc README"
+    - "%{_libdir}/libdrm.so.*"
+    - "%{_libdir}/libkms.so.*"
+    - "%{_mandir}/man3/drm*.3*"
+    - "%{_mandir}/man7/drm*.7*"
+    - "/%{_lib}/udev/rules.d/91-drm-modeset.rules"
+
+SubPackages:
+    - Name: drm-utils
+      AsWholeName: True
+      Summary: Direct Rendering Manager utilities
+      Group: Development/Tools
+      Description: |
+        Utility programs for the kernel DRM interface.  Will void your warranty.
+      Files:
+          - "%{_bindir}/dristat"
+          - "%{_bindir}/drmstat"
+          - "%ifarch %{ix86} x86_64 ia64"
+          - "%{_bindir}/gem_basic"
+          - "%{_bindir}/gem_flink"
+          - "%{_bindir}/gem_mmap"
+          - "%{_bindir}/gem_readwrite"
+          - "%endif"
+          - "%{_bindir}/getclient"
+          - "%{_bindir}/getstats"
+          - "%{_bindir}/getversion"
+          - "%{_bindir}/name_from_fd"
+          - "%{_bindir}/openclose"
+          - "%{_bindir}/setversion"
+          - "%{_bindir}/updatedraw"
+
+    - Name: exynos
+      Summary: Direct Rendering Manager exynos api
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Files:
+          - "%{_libdir}/libdrm_exynos.so.*"
+
+    - Name: freedreno
+      Summary: Direct Rendering Manager freedreno api
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Files:
+          - "%{_libdir}/libdrm_freedreno.so.*"
+
+    - Name: omap
+      Summary: Direct Rendering Manager omap api
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Files:
+          - "%{_libdir}/libdrm_omap.so.*"
+
+    - Name: radeon
+      Summary: Direct Rendering Manager radeon api
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Files:
+          - "%{_libdir}/libdrm_radeon.so.*"
+    
+    - Name: nouveau
+      Summary: Direct Rendering Manager nouveau api
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Files:
+          - "%{_libdir}/libdrm_nouveau.so.*"
+
+    - Name: intel
+      Summary: Direct Rendering Manager intel api
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Files:
+          - "%{_libdir}/libdrm_intel.so.*"
+
+    - Name: devel
+      Summary: Direct Rendering Manager development package
+      Group: Development/Libraries
+      Description: |
+        %{summary}.
+      Requires:
+          - "%{name}-exynos = %{version}-%{release}"
+          - "%{name}-freedreno = %{version}-%{release}"
+          - "%{name}-omap = %{version}-%{release}"
+          - "%{name}-radeon = %{version}-%{release}"
+          - "%{name}-nouveau = %{version}-%{release}"
+          - "%{name}-intel = %{version}-%{release}"
+          - kernel-headers
+      Files:
+          - "%dir %{_includedir}/libdrm"
+          - "%{_includedir}/*"
+          - "%{_libdir}/lib*.so"
+          - "%{_libdir}/pkgconfig/*.pc"
