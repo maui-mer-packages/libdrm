@@ -180,8 +180,8 @@ install -m 0755 .libs/$foo $RPM_BUILD_ROOT%{_bindir}
 done
 popd
 
-mkdir -p $RPM_BUILD_ROOT/%{_lib}/udev/rules.d/
-install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT/%{_lib}/udev/rules.d/
+mkdir -p $RPM_BUILD_ROOT%{_udevrulesdir}
+install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}
 # << install post
 
 %post -p /sbin/ldconfig
@@ -223,7 +223,7 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT/%{_lib}/udev/rules.d/
 %{_libdir}/libkms.so.*
 %{_mandir}/man3/drm*.3*
 %{_mandir}/man7/drm*.7*
-/%{_lib}/udev/rules.d/91-drm-modeset.rules
+%{_udevrulesdir}/91-drm-modeset.rules
 # >> files
 # << files
 

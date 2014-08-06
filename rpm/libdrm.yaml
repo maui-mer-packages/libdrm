@@ -42,7 +42,7 @@ Files:
     - "%{_libdir}/libkms.so.*"
     - "%{_mandir}/man3/drm*.3*"
     - "%{_mandir}/man7/drm*.7*"
-    - "/%{_lib}/udev/rules.d/91-drm-modeset.rules"
+    - "%{_udevrulesdir}/91-drm-modeset.rules"
 
 SubPackages:
     - Name: drm-utils
