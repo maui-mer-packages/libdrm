@@ -130,7 +130,6 @@ SubPackages:
           - "%{name}-intel = %{version}-%{release}"
           - kernel-headers
       Files:
-          - "%dir %{_includedir}/libdrm"
           - "%{_includedir}/*"
           - "%{_libdir}/lib*.so"
           - "%{_libdir}/pkgconfig/*.pc"

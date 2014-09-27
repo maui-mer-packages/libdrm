@@ -78,7 +78,6 @@ Requires(postun): /sbin/ldconfig
 %endif
 
 
-%ifarch %{ix86} x86_64 ia64
 %package radeon
 Summary:    Direct Rendering Manager radeon api
 Group:      Development/Libraries
@@ -101,6 +100,7 @@ Requires(postun): /sbin/ldconfig
 %{summary}.
 
 
+%ifarch %{ix86} x86_64 ia64
 %package intel
 Summary:    Direct Rendering Manager intel api
 Group:      Development/Libraries
@@ -122,9 +122,9 @@ Requires:   %{name}-exynos = %{version}-%{release}
 Requires:   %{name}-freedreno = %{version}-%{release}
 Requires:   %{name}-omap = %{version}-%{release}
 %endif
-%ifarch %{ix86} x86_64 ia64
 Requires:   %{name}-radeon = %{version}-%{release}
 Requires:   %{name}-nouveau = %{version}-%{release}
+%ifarch %{ix86} x86_64 ia64
 Requires:   %{name}-intel = %{version}-%{release}
 %endif
 Requires:   kernel-headers
@@ -202,7 +202,6 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}
 %postun omap -p /sbin/ldconfig
 %endif
 
-%ifarch %{ix86} x86_64 ia64
 %post radeon -p /sbin/ldconfig
 
 %postun radeon -p /sbin/ldconfig
@@ -211,6 +210,7 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}
 
 %postun nouveau -p /sbin/ldconfig
 
+%ifarch %{ix86} x86_64 ia64
 %post intel -p /sbin/ldconfig
 
 %postun intel -p /sbin/ldconfig
@@ -267,7 +267,6 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}
 # << files omap
 %endif
 
-%ifarch %{ix86} x86_64 ia64
 %files radeon
 %defattr(-,root,root,-)
 %{_libdir}/libdrm_radeon.so.*
@@ -280,6 +279,7 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}
 # >> files nouveau
 # << files nouveau
 
+%ifarch %{ix86} x86_64 ia64
 %files intel
 %defattr(-,root,root,-)
 %{_libdir}/libdrm_intel.so.*
@@ -289,7 +289,6 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_udevrulesdir}
 
 %files devel
 %defattr(-,root,root,-)
-%dir %{_includedir}/libdrm
 %{_includedir}/*
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*.pc
